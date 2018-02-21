@@ -1,3 +1,9 @@
-export const CLASSIC_AD = 'CLASSIC';
-export const STANDOUT_AD = 'STANDOUT';
-export const PREMIUM_AD = 'PREMIUM';
+import {defaultPrices} from '../ads/ads';
+export const DEFAULT = 'DEFAULT';
+
+export default (customer) => {
+  console.log(defaultPrices);
+  return (items) => {
+    return items.reduce((total, item) => parseFloat(total) + defaultPrices[item], [0])
+  }
+}
