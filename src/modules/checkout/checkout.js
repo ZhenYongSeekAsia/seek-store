@@ -3,6 +3,7 @@ export const DEFAULT = 'DEFAULT';
 export const UNILIVER = 'UNILIVER';
 export const APPLE = 'APPLE';
 export const NIKE = 'NIKE';
+export const FORD = 'FORD';
 
 export default (customer) => {
   switch(customer) {
@@ -12,12 +13,18 @@ export default (customer) => {
       }
     case APPLE:
       return (items) => {
-        const applePrices = getDiscountPrice(adPrices, STANDOUT_AD, 299.99)
+        const applePrices = getDiscountPrice(adPrices, STANDOUT_AD, 299.99);
         return getTotalPrice(applePrices, items);
       }
     case NIKE:
       return (items) => {
         return getTotalPrice(getDiscountPriceWhenBuyMore(items, adPrices, PREMIUM_AD, 379.99, 4), items);
+      }
+    case FORD:
+      return (items) => {
+        let fordPrices = getDiscountPrice(adPrices, STANDOUT_AD, 309.99);
+        fordPrices = getDiscountPriceWhenBuyMore(items, fordPrices, PREMIUM_AD, 389.99, 3);
+        return getTotalPrice(fordPrices, items) - getMoreForLessDealDiscount(items, CLASSIC_AD, 5, 4);
       }
     default:
       return (items) => {

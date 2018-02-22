@@ -1,5 +1,5 @@
 import { CLASSIC_AD, STANDOUT_AD, PREMIUM_AD } from '../ads/ads';
-import checkout, {DEFAULT, UNILIVER, APPLE, NIKE} from './checkout';
+import checkout, {DEFAULT, UNILIVER, APPLE, NIKE, FORD} from './checkout';
 
 describe('checkout', () => {
   it('should correct for Default', () => {
@@ -20,5 +20,10 @@ describe('checkout', () => {
   it('should correct for Nike', () => {
     const total = checkout(NIKE)([PREMIUM_AD,PREMIUM_AD,PREMIUM_AD,PREMIUM_AD]);
     expect(total).toBeCloseTo(1519.96);
+  });
+
+  it('should correct for Ford', () => {
+    const total = checkout(FORD)([CLASSIC_AD,CLASSIC_AD,CLASSIC_AD,CLASSIC_AD,CLASSIC_AD, STANDOUT_AD, PREMIUM_AD,PREMIUM_AD,PREMIUM_AD]);
+    expect(total).toBeCloseTo(2559.92);
   });
 })
