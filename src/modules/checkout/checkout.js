@@ -1,55 +1,25 @@
-import {adPrices, CLASSIC_AD, STANDOUT_AD, PREMIUM_AD} from '../ads/ads';
-export const DEFAULT = 'DEFAULT';
-export const UNILIVER = 'UNILIVER';
-export const APPLE = 'APPLE';
-export const NIKE = 'NIKE';
-export const FORD = 'FORD';
+import { adPrices, CLASSIC_AD, STANDOUT_AD, PREMIUM_AD } from '../ads/ads';
+import { pricingRules } from '../customer/customer';
+import { getTotalPrice, getDiscountPrices, getDiscountPricesWhenBuyMore, getMoreForLessDealDiscount, MORE_FOR_LESS_DEAL, DISCOUNT_PRICE, DISCOUNT_WHEN_BUY_MORE } from '../pricing-rules/pricing-rules';
 
 export default (customer) => {
-  switch(customer) {
-    case UNILIVER:
-      return (items) => {
-        return getTotalPrice(adPrices, items) - getMoreForLessDealDiscount(items, CLASSIC_AD, 3, 2);
+  return (items) => {
+    const customRules = pricingRules[customer];
+    let customPrices = {...adPrices};
+    let discount = 0;
+    if (customRules) {
+      if (customRules[DISCOUNT_PRICE]) {
+        customPrices = getDiscountPrices({prices: customPrices, rules: customRules[DISCOUNT_PRICE]});
       }
-    case APPLE:
-      return (items) => {
-        const applePrices = getDiscountPrice(adPrices, STANDOUT_AD, 299.99);
-        return getTotalPrice(applePrices, items);
+
+      if (customRules[DISCOUNT_WHEN_BUY_MORE]) {
+        customPrices = getDiscountPricesWhenBuyMore({items, prices: customPrices, rules: customRules[DISCOUNT_WHEN_BUY_MORE]});
       }
-    case NIKE:
-      return (items) => {
-        return getTotalPrice(getDiscountPriceWhenBuyMore(items, adPrices, PREMIUM_AD, 379.99, 4), items);
+
+      if (customRules[MORE_FOR_LESS_DEAL]) {
+        discount = getMoreForLessDealDiscount({items, prices: customPrices, rules: customRules[MORE_FOR_LESS_DEAL]});
       }
-    case FORD:
-      return (items) => {
-        let fordPrices = getDiscountPrice(adPrices, STANDOUT_AD, 309.99);
-        fordPrices = getDiscountPriceWhenBuyMore(items, fordPrices, PREMIUM_AD, 389.99, 3);
-        return getTotalPrice(fordPrices, items) - getMoreForLessDealDiscount(items, CLASSIC_AD, 5, 4);
-      }
-    default:
-      return (items) => {
-        return getTotalPrice(adPrices, items);
-      }
+    }
+    return getTotalPrice({prices: customPrices, items}) - discount;
   }
-}
-
-const getTotalPrice = (adPrices, items) => {
-  return items.reduce((total, item) => parseFloat(total) + adPrices[item], [0]);
-}
-
-const getMoreForLessDealDiscount = (items, adType, purchasedAds, billingAds) => {
-  const filteredItem = items.filter((item) => item === adType);
-  const freeAds = Math.floor(filteredItem.length / purchasedAds) * (purchasedAds - billingAds);
-  return freeAds * adPrices[adType];
-}
-
-const getDiscountPrice = (adPrices, adType, price) => {
-  return { ...adPrices, [adType]: price};
-}
-
-const getDiscountPriceWhenBuyMore = (items, adPrices, adType, price, minAd) => {
-  if(items.filter(item => item === adType ).length >= minAd) {
-    return { ...adPrices, [adType]: price};
-  }
-  return adPrices;
 }
