@@ -1,6 +1,6 @@
-import { adPrices, CLASSIC_AD, STANDOUT_AD, PREMIUM_AD } from '../ads/ads';
-import { pricingRules } from '../customer/customer';
-import { getTotalPrice, getDiscountPrices, getDiscountPricesWhenBuyMore, getMoreForLessDealDiscount, MORE_FOR_LESS_DEAL, DISCOUNT_PRICE, DISCOUNT_WHEN_BUY_MORE } from '../pricing-rules/pricing-rules';
+import { adPrices, CLASSIC_AD, STANDOUT_AD, PREMIUM_AD } from '../../data/ads/ads';
+import { pricingRules } from '../../data/customer/customer';
+import { getTotalPrice, getDiscountPrices, getDiscountPricesWhenBuyMore, getMoreForLessDealDiscount, MORE_FOR_LESS_DEAL, DISCOUNT_PRICE, DISCOUNT_WHEN_BUY_MORE } from '../../modules/pricing-rules/pricing-rules';
 
 export default (customer) => {
   return (items) => {

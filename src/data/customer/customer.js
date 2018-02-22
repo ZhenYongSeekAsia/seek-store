@@ -1,5 +1,5 @@
-import {CLASSIC_AD, STANDOUT_AD, PREMIUM_AD} from '../ads/ads';
-import { MORE_FOR_LESS_DEAL, DISCOUNT_PRICE, DISCOUNT_WHEN_BUY_MORE } from '../pricing-rules/pricing-rules';
+import {CLASSIC_AD, STANDOUT_AD, PREMIUM_AD} from '../../data/ads/ads';
+import { MORE_FOR_LESS_DEAL, DISCOUNT_PRICE, DISCOUNT_WHEN_BUY_MORE } from '../../modules/pricing-rules/pricing-rules';
 
 export const DEFAULT = 'DEFAULT';
 export const UNILIVER = 'UNILIVER';

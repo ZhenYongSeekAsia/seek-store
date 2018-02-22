@@ -1,6 +1,6 @@
-import { CLASSIC_AD, STANDOUT_AD, PREMIUM_AD } from '../ads/ads';
+import { CLASSIC_AD, STANDOUT_AD, PREMIUM_AD } from '../../data/ads/ads';
 import checkout from './checkout';
-import {DEFAULT, UNILIVER, APPLE, NIKE, FORD} from '../customer/customer';
+import {DEFAULT, UNILIVER, APPLE, NIKE, FORD} from '../../data/customer/customer';
 
 describe('checkout', () => {
   it('should correct for Default', () => {
