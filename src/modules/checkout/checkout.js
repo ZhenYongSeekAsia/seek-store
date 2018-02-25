@@ -20,6 +20,6 @@ export default (customer) => {
         discount = getMoreForLessDealDiscount({items, prices: customPrices, rules: customRules[MORE_FOR_LESS_DEAL]});
       }
     }
-    return getTotalPrice({prices: customPrices, items}) - discount;
+    return parseFloat((getTotalPrice({prices: customPrices, items}) - discount).toFixed(2));
   }
 }
